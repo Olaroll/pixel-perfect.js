@@ -6,17 +6,17 @@ export function makePixelPerfect(elem) {
        });
     return;
   }
-  const origWidth = elem.naturalWidth || elem.width; // TODO, handle canvas, video?
-  const origHeight = elem.naturalHeight || elem.height;
+  const origWidth = elem.naturalWidth || elem.width || elem.dataset.ppWidth; // TODO, handle canvas, video?
+  const origHeight = elem.naturalHeight || elem.height || elem.dataset.ppHeight;
   const options = {
     scale: 1,
   };
 
   {
-    const q = elem.dataset.pixelPerfect;
+    const q = elem.dataset.ppScale;
     if (q) {
       if (q.includes('=')) {
-        Object.assign(options, Object.fromEntries(new URLSearchParams(elem.dataset.pixelPerfect || '').entries()));
+        Object.assign(options, Object.fromEntries(new URLSearchParams(elem.dataset.ppScale || '').entries()));
       } else {
         const scale = parseInt(q);
         if (scale > 0) {
@@ -28,7 +28,7 @@ export function makePixelPerfect(elem) {
       const cssWidth = Math.round(parseFloat(getComputedStyle(elem).width));
       const scale = Math.round(Math.max(1, cssWidth / origWidth));
       if (scale > 0) {
-        elem.dataset.pixelPerfect = scale;
+        elem.dataset.ppScale = scale;
         options.scale = scale;
       }
     }
