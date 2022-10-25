@@ -25,8 +25,8 @@ export function makePixelPerfect(elem) {
       }
     } else {
       // guess the scale based on the natural size vs the CSS size
-      const cssWidth = Math.round(parseFloat(getComputedStyle(elem).width));
-      const scale = Math.round(Math.max(1, cssWidth / origWidth));
+      const cssWidth = parseFloat(getComputedStyle(elem).width);
+      const scale = Math.floor(Math.max(1, cssWidth / origWidth));
       if (scale > 0) {
         elem.dataset.ppScale = scale;
         options.scale = scale;
